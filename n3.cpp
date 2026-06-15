@@ -58,23 +58,66 @@ void listarContatos(Contato contatos[]){
 }
 
 void incluirContatos(Contato contatos[]) {
+
+    int opcao = 0;
     char nome[30], telefone[50], email[50];
-    printf("Escreva o nome do contato:");
-    scanf("%s", &nome);
-    printf("Escreva o telefone do contato:");
-    scanf("%s", &telefone);
-    printf("Escreva o email do contato:");
+    printf("1 - Incluir contato no terminal\n2 - Incluir contato com um arquivo de texto");
+    printf("\nEscolha uma opção: ");
+    scanf("%i", &opcao);
+    if (opcao == 1) {
+
+        printf("Escreva o nome do contato:");
+        scanf("%s", &nome);
+        printf("Escreva o telefone do contato:");
+        scanf("%s", &telefone);
+        printf("Escreva o email do contato:");
     scanf("%s", &email);
     Contato contato;
     strcpy(contato.nome, nome); 
     strcpy(contato.telefone, telefone); 
     strcpy(contato.email, email); 
-
+    
     if (contatosRegistrados < contatos_maximo){ 
-    contatos[contatosRegistrados] = contato;
-    contatosRegistrados++;
+        contatos[contatosRegistrados] = contato;
+        contatosRegistrados++;
     }
-
+    } else if (opcao == 2) {
+        char nomeArquivo[50];
+        printf("Escreva o nome do arquivo de texto (com extensão .txt): ");
+        scanf("%s", &nomeArquivo);
+        fptr = fopen(nomeArquivo, "r");
+        if (fptr == NULL) {
+            printf("Erro ao abrir o arquivo.");
+            return;
+        }
+        char linha[100];
+        while (fgets(linha, sizeof(linha), fptr)) {
+            int numeroContato;
+            int numeroProvisorio = numeroContato;
+            Contato contato;
+            sscanf(linha, "Contato %i", &numeroContato);
+            fgets(linha, sizeof(linha), fptr);
+            sscanf(linha, "Nome: %s", contato.nome);
+            fgets(linha, sizeof(linha), fptr);
+            sscanf(linha, "Email: %s", contato.email);
+            fgets(linha, sizeof(linha), fptr);
+            sscanf(linha, "Telefone: %s", contato.telefone);
+            fgets(linha, sizeof(linha), fptr);
+            if (numeroContato > numeroProvisorio) {
+                numeroProvisorio = numeroContato;
+            }
+            if (contatosRegistrados < contatos_maximo && contatosRegistrados <= numeroProvisorio) {
+                contatos[contatosRegistrados] = contato;
+                contatosRegistrados++;
+            } else {
+                printf("Limite de contatos atingido. Não é possível adicionar mais contatos.");
+                break;
+            }
+        }
+        fclose(fptr);
+    } else {
+        printf("Opção inválida.");
+    }
 }
 
 void excluirContatos(Contato contatos[]) {
