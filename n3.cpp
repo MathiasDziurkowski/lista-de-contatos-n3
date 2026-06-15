@@ -12,15 +12,48 @@ typedef struct Contato
 } Contato;
 
 int contatosRegistrados = 0;
+FILE *fptr;
 
-void listarContatos(Contato contatos[]){
-    system("clear");
+void listarContatosArquivo(Contato contatos[]) {
+    fptr = fopen("contatos.txt", "w");
+    for (int i = 0; i < contatosRegistrados; i++) {
+        fprintf(fptr, "Contato %i\n", i + 1);
+        fprintf(fptr, "Nome: %s\n", contatos[i].nome);
+        fprintf(fptr, "Email: %s\n", contatos[i].email);
+        fprintf(fptr, "Telefone: %s\n", contatos[i].telefone);
+        fprintf(fptr, "\n");
+    }
+    fclose(fptr);
+    printf("Contatos salvos no arquivo contatos.txt\n");
+}
+
+void listarContatosTela(Contato contatos[]) {
     for (int i = 0; i < contatosRegistrados; i++) {
         printf("Contato %i\n", i + 1);
         printf("Nome: %s\n", contatos[i].nome);
         printf("Email: %s\n", contatos[i].email);
         printf("Telefone: %s\n", contatos[i].telefone);
         printf("\n");
+    }
+}
+
+
+void listarContatos(Contato contatos[]){
+    system("clear");
+    int opcaoListar;
+    if (contatosRegistrados == 0) {
+        printf("Nenhum contato registrado.\n");
+        return;
+    }
+    printf("1 - Listar contatos na tela\n2 - Salvar contatos em um arquivo de texto");
+    printf("\nEscolha uma opção: ");
+    scanf("%i", &opcaoListar);
+    if (opcaoListar == 1) {
+        listarContatosTela(contatos);
+    } else if (opcaoListar == 2) {  
+        listarContatosArquivo(contatos);
+    } else {
+        printf("Opção inválida.");
     }
 }
 
@@ -49,7 +82,7 @@ void excluirContatos(Contato contatos[]) {
         printf("Índice do contato: %i\n", i + 1);
         printf("Nome: %s", contatos[i].nome);
         printf("Telefone: %s\n", contatos[i].telefone);
-        printf("Email: %\n", contatos[i].email);
+        printf("Email: %s\n", contatos[i].email);
     }
     int indice;
     if (contatosRegistrados > 0) {
@@ -71,15 +104,18 @@ void consultarContatos(Contato contatos[]) {
     printf("Escreva o nome que você quer consultar: ");
     scanf("%s", &nomeConsultar);
     for (int i = 0; i < contatosRegistrados; i++) {
-        if (strcmp(contatos[i].nome, nomeConsultar) == 0) {
+        if (strncmp(contatos[i].nome, nomeConsultar, strlen(nomeConsultar)) == 0) {
             Contato contatoAchado = contatos[i];
-            printf("Nome: %s", contatoAchado.nome);
-            printf("Email: %s", contatoAchado.email);
-            printf("Telefone: %s", contatoAchado.telefone);
+            printf("\n");
+            printf("Nome: %s \n", contatoAchado.nome);
+            printf("Email: %s \n", contatoAchado.email);
+            printf("Telefone: %s \n", contatoAchado.telefone);
+            printf("\n");
         } else {
-            printf("Nome não encontrado");
+            continue;
         }
     }
+    printf("Nenhum contato encontrado com o nome: %s\n", nomeConsultar);
 }
 
 int main() {
