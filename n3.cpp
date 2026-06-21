@@ -65,13 +65,13 @@ void incluirContatos(Contato contatos[]) {
     printf("\nEscolha uma opção: ");
     scanf("%i", &opcao);
     if (opcao == 1) {
-
-        printf("Escreva o nome do contato:");
-        scanf("%s", &nome);
-        printf("Escreva o telefone do contato:");
-        scanf("%s", &telefone);
+        
+        printf("Escreva o nome do contato: ");
+        scanf(" %[^\n]s", nome);
+        printf("\nEscreva o telefone do contato:");
+        scanf(" %[^\n]s", telefone);
         printf("Escreva o email do contato:");
-    scanf("%s", &email);
+        scanf(" %[^\n]s", email);
     Contato contato;
     strcpy(contato.nome, nome); 
     strcpy(contato.telefone, telefone); 
@@ -97,11 +97,11 @@ void incluirContatos(Contato contatos[]) {
             Contato contato;
             sscanf(linha, "Contato %i", &numeroContato);
             fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Nome: %s", contato.nome);
+            sscanf(linha, "Nome: %[^\n]s\n", contato.nome);
             fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Email: %s", contato.email);
+            sscanf(linha, "Email: %[^\n]s\n", contato.email);
             fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Telefone: %s", contato.telefone);
+            sscanf(linha, "Telefone: %[^\n]s\n", contato.telefone);
             fgets(linha, sizeof(linha), fptr);
             if (numeroContato > numeroProvisorio) {
                 numeroProvisorio = numeroContato;
@@ -145,10 +145,11 @@ void excluirContatos(Contato contatos[]) {
 void consultarContatos(Contato contatos[]) {
     char nomeConsultar[30];
     printf("Escreva o nome que você quer consultar: ");
-    scanf("%s", &nomeConsultar);
+    scanf(" %[^\n]", nomeConsultar);
+    Contato contatoAchado;
     for (int i = 0; i < contatosRegistrados; i++) {
         if (strncmp(contatos[i].nome, nomeConsultar, strlen(nomeConsultar)) == 0) {
-            Contato contatoAchado = contatos[i];
+            contatoAchado = contatos[i];
             printf("\n");
             printf("Nome: %s \n", contatoAchado.nome);
             printf("Email: %s \n", contatoAchado.email);
@@ -158,7 +159,9 @@ void consultarContatos(Contato contatos[]) {
             continue;
         }
     }
+    if (strlen(contatoAchado.nome) == 0) {
     printf("Nenhum contato encontrado com o nome: %s\n", nomeConsultar);
+    } 
 }
 
 int main() {
