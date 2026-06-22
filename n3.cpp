@@ -68,9 +68,9 @@ void incluirContatos(Contato contatos[]) {
         
         printf("Escreva o nome do contato: ");
         scanf(" %[^\n]s", nome);
-        printf("\nEscreva o telefone do contato:");
+        printf("Escreva o telefone do contato: ");
         scanf(" %[^\n]s", telefone);
-        printf("Escreva o email do contato:");
+        printf("Escreva o email do contato: ");
         scanf(" %[^\n]s", email);
     Contato contato;
     strcpy(contato.nome, nome); 
@@ -114,6 +114,7 @@ void incluirContatos(Contato contatos[]) {
                 break;
             }
         }
+        printf("Contatos importados do arquivo %s\n", nomeArquivo);
         fclose(fptr);
     } else {
         printf("Opção inválida.");
@@ -121,9 +122,13 @@ void incluirContatos(Contato contatos[]) {
 }
 
 void excluirContatos(Contato contatos[]) {
+    if (contatosRegistrados == 0) {
+        printf("Nenhum contato registrado.\n");
+        return;
+    }
     for (int i = 0; i < contatosRegistrados; i++) { 
         printf("Índice do contato: %i\n", i + 1);
-        printf("Nome: %s", contatos[i].nome);
+        printf("Nome: %s\n", contatos[i].nome);
         printf("Telefone: %s\n", contatos[i].telefone);
         printf("Email: %s\n", contatos[i].email);
     }
@@ -136,6 +141,7 @@ void excluirContatos(Contato contatos[]) {
             contatos[i] = contatos[i + 1];
         }
         contatosRegistrados--;
+        printf("Contato excluído com sucesso.");
     } else {
         printf("O índice é inválido");
     }
@@ -144,6 +150,10 @@ void excluirContatos(Contato contatos[]) {
 
 void consultarContatos(Contato contatos[]) {
     char nomeConsultar[30];
+    if (contatosRegistrados == 0) {
+        printf("Nenhum contato registrado.\n");
+        return;
+    }
     printf("Escreva o nome que você quer consultar: ");
     scanf(" %[^\n]", nomeConsultar);
     Contato contatoAchado;
@@ -161,7 +171,7 @@ void consultarContatos(Contato contatos[]) {
     }
     if (strlen(contatoAchado.nome) == 0) {
     printf("Nenhum contato encontrado com o nome: %s\n", nomeConsultar);
-    } 
+    }
 }
 
 int main() {
