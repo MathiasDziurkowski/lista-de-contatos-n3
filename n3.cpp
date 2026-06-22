@@ -81,6 +81,7 @@ void incluirContatos(Contato contatos[]) {
         contatos[contatosRegistrados] = contato;
         contatosRegistrados++;
     }
+    printf("Contato incluído com sucesso.");
     } else if (opcao == 2) {
         char nomeArquivo[50];
         printf("Escreva o nome do arquivo de texto (com extensão .txt): ");
