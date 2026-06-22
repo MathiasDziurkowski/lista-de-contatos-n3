@@ -27,6 +27,7 @@ void listarContatosArquivo(Contato contatos[]) {
     printf("Contatos salvos no arquivo contatos.txt\n");
 }
 
+
 void listarContatosTela(Contato contatos[]) {
     for (int i = 0; i < contatosRegistrados; i++) {
         printf("Contato %i\n", i + 1);
@@ -36,6 +37,7 @@ void listarContatosTela(Contato contatos[]) {
         printf("\n");
     }
 }
+
 
 
 void listarContatos(Contato contatos[]){
@@ -97,14 +99,9 @@ void incluirContatos(Contato contatos[]) {
             int numeroContato;
             int numeroProvisorio = numeroContato;
             Contato contato;
-            sscanf(linha, "Contato %i", &numeroContato);
-            fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Nome: %[^\n]\n", contato.nome);
-            fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Email: %[^\n] \n", contato.email);
-            fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Telefone: %[^\n]\n", contato.telefone);
-            fgets(linha, sizeof(linha), fptr);
+            if (sscanf(linha, "Contato %i", &numeroContato) == 1 || sscanf(linha, "Nome: %[^\n]", contato.nome) == 1 || sscanf(linha, "Email: %[^\n]", contato.email) == 1 || sscanf(linha, "Telefone: %[^\n]", contato.telefone) == 1) {
+                continue;
+            }
             if (numeroContato > numeroProvisorio) {
                 numeroProvisorio = numeroContato;
             }
@@ -128,12 +125,7 @@ void excluirContatos(Contato contatos[]) {
         printf("Nenhum contato registrado.\n");
         return;
     }
-    for (int i = 0; i < contatosRegistrados; i++) { 
-        printf("Índice do contato: %i\n", i + 1);
-        printf("Nome: %s\n", contatos[i].nome);
-        printf("Telefone: %s\n", contatos[i].telefone);
-        printf("Email: %s\n", contatos[i].email);
-    }
+    listarContatosTela(contatos);
     int indice;
     if (contatosRegistrados > 0) {
     printf("\nEscolha o índice que você queira excluir:");
@@ -150,6 +142,13 @@ void excluirContatos(Contato contatos[]) {
     }
 } 
 
+void printarContato(Contato contato) {
+    printf("Nome: %s\n", contato.nome);
+    printf("Email: %s\n", contato.email);
+    printf("Telefone: %s\n", contato.telefone);
+    printf("\n");
+}
+
 void consultarContatos(Contato contatos[]) {
     char nomeConsultar[30];
     if (contatosRegistrados == 0) {
@@ -162,11 +161,7 @@ void consultarContatos(Contato contatos[]) {
     for (int i = 0; i < contatosRegistrados; i++) {
         if (strncmp(contatos[i].nome, nomeConsultar, strlen(nomeConsultar)) == 0) {
             contatoAchado = contatos[i];
-            printf("\n");
-            printf("Nome: %s \n", contatoAchado.nome);
-            printf("Email: %s \n", contatoAchado.email);
-            printf("Telefone: %s \n", contatoAchado.telefone);
-            printf("\n");
+            printarContato(contatoAchado);
         } else {
             continue;
         }
