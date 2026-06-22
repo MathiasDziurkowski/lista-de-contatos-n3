@@ -59,34 +59,8 @@ void listarContatos(Contato contatos[]){
     }
 }
 
-void incluirContatos(Contato contatos[]) {
-
-    int opcao = 0;
-    char nome[30], telefone[50], email[50];
-    system("clear");
-    printf("1 - Incluir contato no terminal\n2 - Incluir contato com um arquivo de texto");
-    printf("\nEscolha uma opção: ");
-    scanf("%i", &opcao);
-    if (opcao == 1) {
-        
-        printf("Escreva o nome do contato: ");
-        scanf(" %[^\n]", nome);
-        printf("Escreva o telefone do contato: ");
-        scanf(" %[^\n]", telefone);
-        printf("Escreva o email do contato: ");
-        scanf(" %[^\n]", email);
-    Contato contato;
-    strcpy(contato.nome, nome); 
-    strcpy(contato.telefone, telefone); 
-    strcpy(contato.email, email); 
-    
-    if (contatosRegistrados < contatos_maximo){ 
-        contatos[contatosRegistrados] = contato;
-        contatosRegistrados++;
-    }
-    printf("Contato incluído com sucesso.");
-    } else if (opcao == 2) {
-        char nomeArquivo[50];
+void incluirContatosArquivo(Contato contatos[]) {
+    char nomeArquivo[50];
         printf("Escreva o nome do arquivo de texto (com extensão .txt): ");
         scanf("%s", &nomeArquivo);
         fptr = fopen(nomeArquivo, "r");
@@ -115,6 +89,39 @@ void incluirContatos(Contato contatos[]) {
         }
         printf("Contatos importados do arquivo %s\n", nomeArquivo);
         fclose(fptr);
+}
+
+void incluirContatosTerminal(Contato contatos[]) {
+    char nome[30], telefone[50], email[50];
+    printf("Escreva o nome do contato: ");
+        scanf(" %[^\n]", nome);
+        printf("Escreva o telefone do contato: ");
+        scanf(" %[^\n]", telefone);
+        printf("Escreva o email do contato: ");
+        scanf(" %[^\n]", email);
+    Contato contato;
+    strcpy(contato.nome, nome); 
+    strcpy(contato.telefone, telefone); 
+    strcpy(contato.email, email); 
+    
+    if (contatosRegistrados < contatos_maximo){ 
+        contatos[contatosRegistrados] = contato;
+        contatosRegistrados++;
+    }
+    printf("Contato incluído com sucesso.");
+}
+
+void incluirContatos(Contato contatos[]) {
+
+    int opcao = 0;
+    system("clear");
+    printf("1 - Incluir contato no terminal\n2 - Incluir contato com um arquivo de texto");
+    printf("\nEscolha uma opção: ");
+    scanf("%i", &opcao);
+    if (opcao == 1) {
+        incluirContatosTerminal(contatos);
+    } else if (opcao == 2) {
+        incluirContatosArquivo(contatos);
     } else {
         printf("Opção inválida.");
     }
