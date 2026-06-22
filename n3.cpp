@@ -98,11 +98,11 @@ void incluirContatos(Contato contatos[]) {
             Contato contato;
             sscanf(linha, "Contato %i", &numeroContato);
             fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Nome: %[^\n]s\n", contato.nome);
+            sscanf(linha, "Nome: %[^\n]\n", contato.nome);
             fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Email: %[^\n]s\n", contato.email);
+            sscanf(linha, "Email: %[^\n] \n", contato.email);
             fgets(linha, sizeof(linha), fptr);
-            sscanf(linha, "Telefone: %[^\n]s\n", contato.telefone);
+            sscanf(linha, "Telefone: %[^\n]\n", contato.telefone);
             fgets(linha, sizeof(linha), fptr);
             if (numeroContato > numeroProvisorio) {
                 numeroProvisorio = numeroContato;
