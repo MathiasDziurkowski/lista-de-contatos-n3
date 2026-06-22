@@ -61,17 +61,18 @@ void incluirContatos(Contato contatos[]) {
 
     int opcao = 0;
     char nome[30], telefone[50], email[50];
+    system("clear");
     printf("1 - Incluir contato no terminal\n2 - Incluir contato com um arquivo de texto");
     printf("\nEscolha uma opção: ");
     scanf("%i", &opcao);
     if (opcao == 1) {
         
         printf("Escreva o nome do contato: ");
-        scanf(" %[^\n]s", nome);
+        scanf(" %[^\n]", nome);
         printf("Escreva o telefone do contato: ");
-        scanf(" %[^\n]s", telefone);
+        scanf(" %[^\n]", telefone);
         printf("Escreva o email do contato: ");
-        scanf(" %[^\n]s", email);
+        scanf(" %[^\n]", email);
     Contato contato;
     strcpy(contato.nome, nome); 
     strcpy(contato.telefone, telefone); 
