@@ -41,7 +41,7 @@ void listarContatosTela(Contato contatos[]) {
 
 
 void listarContatos(Contato contatos[]){
-    system("clear");
+    system("cls");
     int opcaoListar;
     if (contatosRegistrados == 0) {
         printf("Nenhum contato registrado.\n");
@@ -114,7 +114,7 @@ void incluirContatosTerminal(Contato contatos[]) {
 void incluirContatos(Contato contatos[]) {
 
     int opcao = 0;
-    system("clear");
+    system("cls");
     printf("1 - Incluir contato no terminal\n2 - Incluir contato com um arquivo de texto");
     printf("\nEscolha uma opção: ");
     scanf("%i", &opcao);
@@ -201,7 +201,7 @@ int main() {
             break;
         }
     } while (opcao != 5);
-    system("clear");
+    system("cls");
     printf("Programa encerrado.");
     return 0;
 }
